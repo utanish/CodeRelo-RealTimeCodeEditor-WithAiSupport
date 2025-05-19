@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     // Initialize socket connection at the App level
-    const newSocket = io("http://localhost:3000", {
+    const newSocket = io(window.location.origin, {
       transports: ["websocket"],
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
