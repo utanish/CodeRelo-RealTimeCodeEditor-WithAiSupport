@@ -71,7 +71,7 @@ export default function RelobotChatbot({
     setHidden(false);
 
     try {
-      const res = await fetch("http://localhost:3000/api/ai/suggest", {
+      const res = await fetch(`${window.location.origin}/api/ai/suggest`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, language, message: userMessage }),
