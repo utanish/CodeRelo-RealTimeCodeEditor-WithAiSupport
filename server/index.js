@@ -3,17 +3,12 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import fs from "fs-extra";
-import path, { dirname } from "path";
+import path from "path";
 import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from "@google/genai"; // ✅ Correct Gemini SDK
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
-
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
@@ -25,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // ==============================
-// 🔒 Safe Code Execution
+// 🔒 Safe Code Execution (Unchanged)
 // ==============================
 app.post("/run", async (req, res) => {
   const { code, language, input = "" } = req.body;
@@ -76,7 +71,7 @@ app.post("/run", async (req, res) => {
     res.status(200).json({ output: stdout });
   });
 });
-
+dotenv.config();
 // ==============================
 // 🤖 Gemini AI Suggestion Endpoint
 // ==============================
@@ -89,6 +84,9 @@ app.post("/api/ai/suggest", async (req, res) => {
     return res.status(400).json({ error: "Provide either message or code." });
   }
 
+  let prompt = "";
+
+  // Define simple keywords to decide if the message is code-related
   const codeKeywords = [
     "code",
     "bug",
@@ -103,31 +101,44 @@ app.post("/api/ai/suggest", async (req, res) => {
     message.toLowerCase().includes(word)
   );
 
-  let prompt = "";
-
+  // 👇 Decide prompt based on message content
   if (isCodeRelated && code && language) {
     prompt = `
 You are an experienced ${language} developer and a technical assistant.
 
-The user asked:
+The user has asked:
 "${message}"
 
-Here is their code:
+Please analyze the following code and respond with clear, concise suggestions:
+- Identify any errors or bugs
+- Suggest optimizations or best practices
+- Explain changes in simple terms
+
+Here is the code:
 \`\`\`${language}
 ${code}
 \`\`\`
 
-Suggest improvements, identify bugs, and explain changes simply.
-    `;
+Be professional, friendly, and educational.
+`;
   } else {
     prompt = `
-You are a friendly, geeky AI assistant.
+You are an intelligent, friendly AI assistant with a sense of humor — especially geeky, coding-related humor.
 
-User said:
+The user said:
 "${message}"
 
-Respond with casual, friendly help — optionally with coding jokes.
-    `;
+Respond in a warm, casual tone. Feel free to:
+- Add light coding jokes or puns where appropriate (but don't overdo it)
+- Avoid diving into technical analysis unless asked
+- Make the user smile while keeping the reply helpful
+
+Example:
+User: "How are you?"
+You: "Running smoothly with 0 errors... unlike most JavaScript apps on a Friday night 😄"
+
+Keep it fun, friendly, and short unless the user asks for depth.
+`;
   }
 
   try {
@@ -199,18 +210,20 @@ io.on("connection", (socket) => {
 });
 
 // ==============================
-// 🌐 Serve React Frontend (client/dist)
+// 🚀 Start Server
 // ==============================
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static frontend
 app.use(express.static(path.join(__dirname, "client/dist")));
 
-app.get("*", (req, res) => {
+// For any route not handled by APIs, return the frontend
+app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
 });
 
-// ==============================
-// 🚀 Start Server
-// ==============================
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
