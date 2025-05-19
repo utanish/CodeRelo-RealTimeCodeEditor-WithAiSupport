@@ -386,15 +386,18 @@ export default function EditorPage({ socket }) {
             setAiLoading(true);
             setAiSuggestion("");
             try {
-              const res = await fetch("http://localhost:3000/api/ai/suggest", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  code,
-                  language,
-                  message: "Please review this code",
-                }),
-              });
+              const res = await fetch(
+                `${window.location.origin}/api/ai/suggest`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    code,
+                    language,
+                    message: "Please review this code",
+                  }),
+                }
+              );
               const data = await res.json();
               setAiSuggestion(data.suggestion || "No suggestions returned.");
             } catch (err) {
