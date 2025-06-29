@@ -105,6 +105,11 @@ The app uses the Google Gemini SDK to:
 You must supply your own API key from [Google AI Studio](https://makersuite.google.com/).
 
 ---
+## Architecture Diagram
+
+![ChatGPT Image Jun 29, 2025, 06_55_37 PM](https://github.com/user-attachments/assets/4813b2d6-b1cc-489b-aab7-1e97145a4a7b)
+
+---
 
 ## Screenshots
 
@@ -126,6 +131,7 @@ To visually understand the functionality and UI, below are some representative s
 ### Relobot : Coding AI Chatbot
 
 <img width="1680" alt="image" src="https://github.com/user-attachments/assets/6413713a-d5c2-4330-804b-76e30787c4e0" />
+
 
 
 ---
