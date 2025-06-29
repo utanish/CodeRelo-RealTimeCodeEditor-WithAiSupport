@@ -139,7 +139,7 @@ This project is licensed under the MIT License. You are free to use, distribute,
 ## Author
 
 Tanish Upadhyay
-GitHub: [@yourusername](https://github.com/utanish)
-LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/tanish-upadhyay)
+GitHub: [@utanish](https://github.com/utanish)
+LinkedIn: [linkedin.com/in/tanish-upadhyay/](https://linkedin.com/in/tanish-upadhyay)
 
 Feel free to contribute or raise an issue if you encounter bugs or have suggestions for improvements.
