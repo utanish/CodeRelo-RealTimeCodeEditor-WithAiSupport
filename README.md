@@ -105,11 +105,7 @@ The app uses the Google Gemini SDK to:
 You must supply your own API key from [Google AI Studio](https://makersuite.google.com/).
 
 ---
-## Architecture Diagram
 
-![ChatGPT Image Jun 29, 2025, 06_55_37 PM](https://github.com/user-attachments/assets/4813b2d6-b1cc-489b-aab7-1e97145a4a7b)
-
----
 
 ## Screenshots
 
